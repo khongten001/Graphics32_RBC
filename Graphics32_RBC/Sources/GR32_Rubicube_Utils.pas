@@ -27,16 +27,17 @@ uses
   , GR32_Math
   , VCL.Graphics                //  TColor
   , System.Classes              //  TList
+  , System.Types                //  TRect,  TSize
   ;
 
 const
   Pi     = 3.14159265358979323846;  // 270. derece
-  Pi_000 = Pi   * 0.01;
   Pi_1   = Pi   / 2;                // 1.570796326794897; // 180. derece
-  Pi_001 = Pi_1 * 0.01;
   Pi_3   = (Pi  / 2) * 3;           // 4.712388980384690; // 90. derece...
-  Pi_003 = Pi_3 * 0.01;
   Pi_4   = Pi   * 2;                // 6.283185307179586; // Bu özel hesaplamalar için kullanılan Pi'nin 2. katıdır...
+  Pi_000 = Pi   * 0.01;
+  Pi_001 = Pi_1 * 0.01;
+  Pi_003 = Pi_3 * 0.01;
   Pi_004 = Pi_4 * 0.01;             // => 0.06283185307179586
 
 
@@ -61,6 +62,10 @@ type                                                                    //      
     public
       function ToColor32: TColor32;
   end;
+  TRect_Helper = record Helper for TRect
+    public
+      function ToCenterPointFloat: TFloatPoint;
+  end;
   TListHelper = class helper for TList
     public
       procedure Flush; // Listenin içindeki TObject soyundan gelen nesneleri free etmeye yarar... Clear TList'in elemanlarını yok ederken bu bağlantı kurulan o nesnelerin kendisini de yok eder...
@@ -82,13 +87,13 @@ type                                                                    //      
       procedure SekilBas(aRenk: TColor32; const aPoints: TArrayOfArrayOfFloatPoint); overload; // Filler eklenecek
       procedure YaziBas(X, Y: Integer; aString: String; aColor: TColor = cldefault; aFontSize: Integer = 0; aFontName: String = ''; aFontPos: TFontPos = fpCenterCenter; aFontStyle: TFontStyles = []; aAntiAliased: Boolean = False); overload;
       procedure YaziBas(aRect: TRect; aString: String; aColor: TColor = cldefault; aFontSize: Integer = 0; aFontName: String = ''; aFontPos: TFontPos = fpCenterCenter; aFontStyle: TFontStyles = []; aAntiAliased: Boolean = False); overload;
+      procedure YaziBas(aRect: TRect; aString: String; aFont: TFont; aFontPos: TFontPos = fpCenterCenter; aAntiAliased: Boolean = False); overload;
   end;
 
 implementation
 
 uses
-    System.Types    //  TSize
-  , System.SysUtils //  FreeAndNil
+    System.SysUtils //  FreeAndNil
   ;
 
 { TRenderHelper }
@@ -132,7 +137,7 @@ function TRenderHelper.DikDortgenCizgi(aMerkez: TFloatPoint; aWidth, aHeight, aK
 var
   X, Y, W, H, Z: Single;
   Noktalar: TArrayOfFloatPoint;
-  AOF: Array of Single; // : TArrayOfFloat;
+  //AOF: Array of Single; // : TArrayOfFloat;
   Dash, Dot: Single;
 begin
   if (aKalinlik < 1)
@@ -200,10 +205,7 @@ end;
 
 function TRenderHelper.CizgiDama(aXY, aWH: TFloatPoint; aKalinlik, aDamaSize: Single): TArrayOfArrayOfFloatPoint;
 var
-  //X, Y, W, H,
-  Z: Single;
   Noktalar: TArrayOfFloatPoint;
-  Dash, Dot: Single;
 begin
   if (aKalinlik < 1)
   or (aDamaSize < 1)
@@ -214,9 +216,6 @@ begin
   SetLength(Noktalar, 2);
   Noktalar[0] := FloatPoint(aXY.X, aXY.Y);
   Noktalar[1] := FloatPoint(aWH.X, aWH.Y);
-  Z := aKalinlik;
-  Dash := Z * 3;
-  Dot  := Z * 1;
   Result := BuildPolyPolyline(BuildDashedLine(Noktalar, ArrayOfFloat([aDamaSize, aDamaSize])), False, aKalinlik, jsRound, esRound); // BuildPolyline(Noktalar, aKalinlik, jsRound, esRound);
 end;
 
@@ -264,6 +263,11 @@ begin
                     , { Steps     } aSteps
                     );//: TArrayOfFloatPoint;
 
+end;
+
+procedure TRenderHelper.YaziBas(aRect: TRect; aString: String; aFont: TFont; aFontPos: TFontPos; aAntiAliased: Boolean);
+begin
+  YaziBas(aRect, aString, aFont.Color, aFont.Size, aFont.Name, aFontPos, aFont.Style, aAntiAliased);
 end;
 
 function TRenderHelper.AngleArc(aCenter: TFloatPoint; const aRadius, aThickness, aAngle, aOffset: TFloat; Steps: Integer = 4000): TArrayOfFloatPoint;
@@ -399,6 +403,14 @@ begin
       TObject( Self[I] ).Free;
       Self.Delete( I );
   end;
+end;
+
+{ TRect_Helper }
+
+function TRect_Helper.ToCenterPointFloat: TFloatPoint;
+begin
+  Result.X := Self.CenterPoint.X;
+  Result.Y := Self.CenterPoint.Y;
 end;
 
 end.

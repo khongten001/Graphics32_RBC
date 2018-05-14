@@ -12,6 +12,8 @@ Bu bileşen paketi hali hazırda geliştirilmesi tamamlanmış daha büyük bir 
 
 Uğur PARLAYAN
 
+![widget7](https://user-images.githubusercontent.com/24311198/39868108-cfd4cb3c-5460-11e8-8a66-4b57528ae2bb.gif)
+
 ![widgets5](https://user-images.githubusercontent.com/24311198/39690888-4c394312-51e4-11e8-81df-54e0f042be72.gif)
 
 ![widget3b](https://user-images.githubusercontent.com/24311198/39653271-06c71030-4ff9-11e8-8bc1-2c1da0232358.gif)
