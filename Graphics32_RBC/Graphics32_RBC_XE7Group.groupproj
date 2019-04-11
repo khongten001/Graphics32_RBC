@@ -3,10 +3,19 @@
         <ProjectGuid>{5472E720-07D1-4286-B140-6AAB4D6852B1}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="Packages\Graphics32_RBC.dproj">
+        <Projects Include="Packages\XE7\Graphics32_RBC.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\Widget_Chart\Demo_Widget_Chart.dproj">
             <Dependencies/>
         </Projects>
         <Projects Include="Demos\Widgets\Demo_Widgets.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\Doviz_com\GramAltin.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Demos\DoorGUI\DoorGUI.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -18,13 +27,22 @@
         </BorlandProject>
     </ProjectExtensions>
     <Target Name="Graphics32_RBC">
-        <MSBuild Projects="Packages\Graphics32_RBC.dproj"/>
+        <MSBuild Projects="Packages\XE7\Graphics32_RBC.dproj"/>
     </Target>
     <Target Name="Graphics32_RBC:Clean">
-        <MSBuild Projects="Packages\Graphics32_RBC.dproj" Targets="Clean"/>
+        <MSBuild Projects="Packages\XE7\Graphics32_RBC.dproj" Targets="Clean"/>
     </Target>
     <Target Name="Graphics32_RBC:Make">
-        <MSBuild Projects="Packages\Graphics32_RBC.dproj" Targets="Make"/>
+        <MSBuild Projects="Packages\XE7\Graphics32_RBC.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Demo_Widget_Chart">
+        <MSBuild Projects="Demos\Widget_Chart\Demo_Widget_Chart.dproj"/>
+    </Target>
+    <Target Name="Demo_Widget_Chart:Clean">
+        <MSBuild Projects="Demos\Widget_Chart\Demo_Widget_Chart.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Demo_Widget_Chart:Make">
+        <MSBuild Projects="Demos\Widget_Chart\Demo_Widget_Chart.dproj" Targets="Make"/>
     </Target>
     <Target Name="Demo_Widgets">
         <MSBuild Projects="Demos\Widgets\Demo_Widgets.dproj"/>
@@ -35,14 +53,32 @@
     <Target Name="Demo_Widgets:Make">
         <MSBuild Projects="Demos\Widgets\Demo_Widgets.dproj" Targets="Make"/>
     </Target>
+    <Target Name="GramAltin">
+        <MSBuild Projects="Demos\Doviz_com\GramAltin.dproj"/>
+    </Target>
+    <Target Name="GramAltin:Clean">
+        <MSBuild Projects="Demos\Doviz_com\GramAltin.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GramAltin:Make">
+        <MSBuild Projects="Demos\Doviz_com\GramAltin.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DoorGUI">
+        <MSBuild Projects="Demos\DoorGUI\DoorGUI.dproj"/>
+    </Target>
+    <Target Name="DoorGUI:Clean">
+        <MSBuild Projects="Demos\DoorGUI\DoorGUI.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DoorGUI:Make">
+        <MSBuild Projects="Demos\DoorGUI\DoorGUI.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="Graphics32_RBC;Demo_Widgets"/>
+        <CallTarget Targets="Graphics32_RBC;Demo_Widget_Chart;Demo_Widgets;GramAltin;DoorGUI"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="Graphics32_RBC:Clean;Demo_Widgets:Clean"/>
+        <CallTarget Targets="Graphics32_RBC:Clean;Demo_Widget_Chart:Clean;Demo_Widgets:Clean;GramAltin:Clean;DoorGUI:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="Graphics32_RBC:Make;Demo_Widgets:Make"/>
+        <CallTarget Targets="Graphics32_RBC:Make;Demo_Widget_Chart:Make;Demo_Widgets:Make;GramAltin:Make;DoorGUI:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
